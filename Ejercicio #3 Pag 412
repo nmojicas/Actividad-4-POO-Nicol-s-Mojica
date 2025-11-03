@@ -1,0 +1,115 @@
+##################################
+Ejercicio + Ejercicio Propuesto
+##################################
+package Excepciones;
+import java.util.*;
+
+public class CálculosNuméricos {
+
+    static void calcularLogaritmoNeperiano(double valor) {
+        try {
+            if (valor < 0) {
+                throw new ArithmeticException("El valor debe ser un número positivo");
+            }
+            double resultado = Math.log(valor);
+            System.out.println("Logaritmo neperiano = " + resultado);
+        } catch (ArithmeticException e) {
+            System.out.println("El valor debe ser un número positivo para calcular el logaritmo");
+        } catch (InputMismatchException e) {
+            System.out.println("El valor debe ser numérico para calcular el logaritmo");
+        }
+    }
+
+    static void calcularRaízCuadrada(double valor) {
+        try {
+            if (valor < 0) {
+                throw new ArithmeticException("El valor debe ser un número positivo");
+            }
+            double resultado = Math.sqrt(valor);
+            System.out.println("Raíz cuadrada = " + resultado);
+        } catch (ArithmeticException e) {
+            System.out.println("El valor debe ser un número positivo para calcular la raíz cuadrada");
+        } catch (InputMismatchException e) {
+            System.out.println("El valor debe ser numérico para calcular la raíz cuadrada");
+        }
+    }
+
+    static void calcularPendiente(double x1, double y1, double x2, double y2) {
+        if (x2 - x1 == 0) {
+            System.out.println("La pendiente es indefinida (división por cero).");
+        } else {
+            double pendiente = (y2 - y1) / (x2 - x1);
+            System.out.println("Pendiente de la recta = " + pendiente);
+        }
+    }
+
+    static void calcularPuntoMedio(double x1, double y1, double x2, double y2) {
+        double xm = (x1 + x2) / 2;
+        double ym = (y1 + y2) / 2;
+        System.out.println("Punto medio = (" + xm + ", " + ym + ")");
+    }
+
+    static void calcularRaicesCuadratica(double a, double b, double c) {
+        if (a == 0) {
+            System.out.println("No es una ecuación cuadrática (a=0).");
+            return;
+        }
+        double discriminante = b * b - 4 * a * c;
+        if (discriminante > 0) {
+            double r1 = (-b + Math.sqrt(discriminante)) / (2 * a);
+            double r2 = (-b - Math.sqrt(discriminante)) / (2 * a);
+            System.out.println("Raíces reales: " + r1 + " y " + r2);
+        } else if (discriminante == 0) {
+            double r = -b / (2 * a);
+            System.out.println("Raíz doble: " + r);
+        } else {
+            double real = -b / (2 * a);
+            double imag = Math.sqrt(-discriminante) / (2 * a);
+            System.out.println("Raíces complejas: " + real + " + " + imag + "i y " + real + " - " + imag + "i");
+        }
+    }
+
+    static void convertirBase(int numero, int base) {
+        if (base < 2 || base > 36) {
+            System.out.println("Base no válida. Debe estar entre 2 y 36.");
+            return;
+        }
+        String resultado = Integer.toString(numero, base).toUpperCase();
+        System.out.println("Número " + numero + " en base " + base + " = " + resultado);
+    }
+
+    public static void main(String args[]) {
+        Scanner teclado = new Scanner(System.in);
+
+        System.out.print("Valor numérico para logaritmo y raíz cuadrada = ");
+        double valor = teclado.nextDouble();
+        calcularLogaritmoNeperiano(valor);
+        calcularRaízCuadrada(valor);
+
+        System.out.print("\nCoordenadas para calcular pendiente y punto medio\nx1 = ");
+        double x1 = teclado.nextDouble();
+        System.out.print("y1 = ");
+        double y1 = teclado.nextDouble();
+        System.out.print("x2 = ");
+        double x2 = teclado.nextDouble();
+        System.out.print("y2 = ");
+        double y2 = teclado.nextDouble();
+        calcularPendiente(x1, y1, x2, y2);
+        calcularPuntoMedio(x1, y1, x2, y2);
+
+        System.out.print("\nCoeficientes de la ecuación cuadrática ax^2 + bx + c\n");
+        System.out.print("a = ");
+        double a = teclado.nextDouble();
+        System.out.print("b = ");
+        double b = teclado.nextDouble();
+        System.out.print("c = ");
+        double c = teclado.nextDouble();
+        calcularRaicesCuadratica(a, b, c);
+
+        System.out.print("\nNúmero decimal a convertir: ");
+        int num = teclado.nextInt();
+        System.out.print("Base a la que convertir: ");
+        int base = teclado.nextInt();
+        convertirBase(num, base);
+    }
+}
