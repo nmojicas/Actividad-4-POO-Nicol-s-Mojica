@@ -1,0 +1,106 @@
+package Excepciones;
+import java.util.*;
+
+public class Vendedor {
+    String nombre;
+    String apellidos;
+    int edad;
+
+    Vendedor(String nombre, String apellidos) {
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+    }
+
+    void imprimir() {
+        System.out.println("Nombre del vendedor = " + nombre);
+        System.out.println("Apellidos del vendedor = " + apellidos);
+        System.out.println("Edad del vendedor = " + edad);
+    }
+
+    void verificarEdad(int edad) {
+        if (edad < 18) {
+            throw new IllegalArgumentException("El vendedor debe ser mayor de 18 años.");
+        }
+        if (edad >= 0 && edad < 120) {
+            this.edad = edad;
+        } else {
+            throw new IllegalArgumentException("La edad no puede ser negativa ni mayor a 120.");
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner teclado = new Scanner(System.in);
+        System.out.println("Nombre del vendedor = ");
+        String n = teclado.next();
+        System.out.println("Apellidos del vendedor = ");
+        String a = teclado.next();
+        Vendedor vendedor = new Vendedor(n, a);
+        System.out.println("Edad del vendedor = ");
+        int e = teclado.nextInt();
+        vendedor.verificarEdad(e);
+        vendedor.imprimir();
+    }
+}
+##########################################################
+                 Ejercicio propuesto
+##########################################################
+import java.util.HashMap;
+import java.util.Map;
+class MiClase {
+    String valor;
+    public MiClase(String valor) throws Exception {
+        if (valor == null || valor.isEmpty()) {
+            throw new Exception("El valor no puede ser nulo o vacío");
+        }
+        this.valor = valor;
+    }
+
+    public void mostrar() {
+        System.out.println("Valor: " + valor);
+    }
+}
+class TablaASCII {
+    private Map<String, Integer> tabla;
+
+    public TablaASCII() {
+        tabla = new HashMap<>();
+        tabla.put("A", 65);
+        tabla.put("B", 66);
+        tabla.put("C", 67);
+        tabla.put("a", 97);
+        tabla.put("b", 98);
+        tabla.put("c", 99);
+        tabla.put("0", 48);
+        tabla.put("1", 49);
+    }
+
+    public int get(String simbolo) throws Exception {
+        if (!tabla.containsKey(simbolo)) {
+            throw new Exception("Símbolo no encontrado en la tabla ASCII");
+        }
+        return tabla.get(simbolo);
+    }
+
+    public void set(String simbolo, int numero) {
+        tabla.put(simbolo, numero);
+    }
+}
+public class Programa {
+    public static void main(String[] args) {
+        try {
+            MiClase obj = new MiClase("");
+            obj.mostrar();
+        } catch (Exception e) {
+            System.out.println("Excepción capturada: " + e.getMessage());
+        }
+        TablaASCII ascii = new TablaASCII();
+        try {
+            System.out.println("Valor de 'A': " + ascii.get("A"));
+            System.out.println("Valor de 'a': " + ascii.get("a"));
+            ascii.set("@", 64);
+            System.out.println("Valor de '@': " + ascii.get("@"));
+        } catch (Exception e) {
+            System.out.println("Excepción en tabla ASCII: " + e.getMessage());
+        }
+    }
+}
