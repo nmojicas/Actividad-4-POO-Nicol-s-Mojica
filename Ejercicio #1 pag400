@@ -27,3 +27,12 @@ public class PruebaExcepciones {
         }
     }
 }
+###############################################
+Ejercicio Propuesto #1
+Respuesta:
+Indice de string por fuera del límite
+Ejercicio Propuesto #2
+Respuesta:
+Excepción de formato de número
+Ingresando al finally
+###############################################
