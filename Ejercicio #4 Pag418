@@ -1,0 +1,130 @@
+package Excepciones;
+import java.util.*;
+
+public class EquipoMaratónProgramación {
+    String nombreEquipo;
+    String universidad;
+    String lenguajeProgramación;
+    Programador[] programadores;
+    int tamañoEquipo;
+
+    EquipoMaratónProgramación(String nombreEquipo, String universidad, String lenguajeProgramación) {
+        this.nombreEquipo = nombreEquipo;
+        this.universidad = universidad;
+        this.lenguajeProgramación = lenguajeProgramación;
+        tamañoEquipo = 0;
+        programadores = new Programador[3];
+    }
+
+    boolean estáLleno() {
+        return tamañoEquipo == programadores.length;
+    }
+
+    void añadir(Programador programador) throws Exception {
+        if (estáLleno()) {
+            throw new Exception("El equipo está completo. No se pudo agregar programador.");
+        }
+        programadores[tamañoEquipo] = programador;
+        tamañoEquipo++;
+    }
+
+    static void validarCampo(String campo) throws Exception {
+        for (int j = 0; j < campo.length(); j++) {
+            char c = campo.charAt(j);
+            if (Character.isDigit(c)) {
+                throw new Exception("El nombre no puede tener dígitos.");
+            }
+        }
+        if (campo.length() > 20) {
+            throw new Exception("La longitud no debe ser superior a 20 caracteres.");
+        }
+    }
+
+    public static void main(String args[]) throws Exception {
+        Scanner teclado = new Scanner(System.in);
+        System.out.println("Nombre del equipo = ");
+        String nombre = teclado.next();
+        System.out.println("Universidad = ");
+        String universidad = teclado.next();
+        System.out.println("Lenguaje de programación = ");
+        String lenguaje = teclado.next();
+        EquipoMaratónProgramación equipo = new EquipoMaratónProgramación(nombre, universidad, lenguaje);
+
+        System.out.println("Datos de los integrantes del equipo");
+        String nombreProgramador;
+        String apellidosProgramador;
+        for (int i = 0; i < 3; i++) {
+            System.out.println("Nombre del integrante = ");
+            nombreProgramador = teclado.next();
+            validarCampo(nombreProgramador);
+            System.out.println("Apellidos del integrante = ");
+            apellidosProgramador = teclado.next();
+            validarCampo(apellidosProgramador);
+            Programador programador = new Programador(nombreProgramador, apellidosProgramador);
+            equipo.añadir(programador);
+        }
+    }
+}
+package Excepciones;
+
+public class Programador {
+    String nombre;
+    String apellidos;
+
+    Programador(String nombre, String apellidos) {
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+    }
+}
+#######################################################
+Ejercicio Propuesto
+#######################################################
+import java.util.Scanner;
+
+public class ValidadorContraseña {
+
+    static boolean validarContraseña(String contraseña) {
+        if (contraseña.length() < 8) return false;
+        if (contraseña.contains(" ")) return false;
+
+        boolean tieneMayus = false;
+        boolean tieneMinus = false;
+        boolean tieneNumero = false;
+        boolean tieneEspecial = false;
+
+        for (char c : contraseña.toCharArray()) {
+            if (Character.isUpperCase(c)) tieneMayus = true;
+            else if (Character.isLowerCase(c)) tieneMinus = true;
+            else if (Character.isDigit(c)) tieneNumero = true;
+            else tieneEspecial = true;
+        }
+
+        return tieneMayus && tieneMinus && tieneNumero && tieneEspecial;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String contraseña1, contraseña2;
+
+        while (true) {
+            System.out.print("Ingrese la contraseña: ");
+            contraseña1 = sc.nextLine();
+            System.out.print("Confirme la contraseña: ");
+            contraseña2 = sc.nextLine();
+
+            if (!contraseña1.equals(contraseña2)) {
+                System.out.println("Error: Las contraseñas no coinciden. Intente de nuevo.\n");
+                continue;
+            }
+
+            if (!validarContraseña(contraseña1)) {
+                System.out.println("Error: La contraseña no cumple con los requisitos.\n");
+                System.out.println("Requisitos:\n- Mínimo 8 caracteres\n- Sin espacios\n- Al menos una mayúscula\n- Al menos una minúscula\n- Al menos un número\n- Al menos un carácter especial\n");
+                continue;
+            }
+
+            System.out.println("contraseña válida y confirmada");
+            break;
+        }
+    }
+}
